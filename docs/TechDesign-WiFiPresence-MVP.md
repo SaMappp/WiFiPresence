@@ -108,7 +108,7 @@ Publication integration: the capture adapters live in `capture/`, with a separat
 - User level: A
 - Platform: local Windows-first Python/NumPy analysis, optional loopback page and explicit live adapter
 - Chosen stack: Python CLI, NumPy, official ESPectre 3.0.0 collection, NPZ/JSONL/CSV/HTML
-- Distribution: public GitHub project subdirectory; analysis runs locally, without a hosted application
+- Distribution: independent public GitHub repository SaMappp/WiFiPresence (extracted on 2026-11-05); analysis runs locally, without a hosted application
 - Coding assistant: Codex for the current document and offline implementation; human team review pending
 - AI in product scope: experimental numerical CSI classifier in the research extension; no LLM or cloud model
 - Research status: real pilot capture and quality audit; algorithm checks are still synthetic

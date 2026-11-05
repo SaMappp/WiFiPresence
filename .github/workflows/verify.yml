@@ -1,0 +1,30 @@
+name: Verify public project
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-and-live-software:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install declared dependency
+        run: python -m pip install -r requirements.txt
+      - name: Offline software checks
+        run: python -m unittest discover -s tests -v
+      - name: Preserve original public dataset
+        run: python scripts/verify_dataset.py
+      - name: Synthetic offline demonstration
+        run: python wp.py demo --out .test-work/ci-synthetic-demo
+      - name: Public live software checks (no hardware or private inputs)
+        working-directory: live-mvp
+        run: python -X utf8 -m unittest -v test_app test_live

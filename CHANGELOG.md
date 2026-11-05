@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-11-05 independent repository
+
+- Extract project-only history into SaMappp/WiFiPresence and update canonical source links.
+- Preserve all existing public pilot bytes, exclusions, software safeguards and experimental limitations. New recordings, models and private logs remain outside the repository.
+- Add an automated offline/public-code verification workflow. Keep the existing website as a static entry and the old source directory as an archival copy.
+
 ## 2026-10-29 presence research workbench
 
 Added small-model training/readiness/audit/inference commands, file input and local interface, bounded live raw receiver with explicit cleanup/readback, and 20 scientific-boundary/integration tests. Real fitting is refused for the unchanged pilot corpus. Synthetic fixtures remain isolated. This extends research tooling and does not assert validated presence or interference rejection.

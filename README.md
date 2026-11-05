@@ -1,5 +1,7 @@
 # WiFiPresence
 
+**Canonical repository: [SaMappp/WiFiPresence](https://github.com/SaMappp/WiFiPresence).** This independent repository was extracted from the personal-site project directory on 2026-11-05, preserving the three project commits and their authors. Use this repository for source, issues and future development. The existing project website remains a static introduction and preview. See the [migration record](reports/REPOSITORY-MIGRATION-2026-11-05.md).
+
 ## 2026-11-05: live MVP source and public entry
 
 [Project page](https://samappp.github.io/projects/WiFiPresence/) · [Run the live MVP locally](live-mvp/README.md) · [Current verification and limitations](reports/LIVE-MVP-2026-11-05.md)
@@ -73,4 +75,4 @@ Next: stabilize sampling, recollect eligible S1/S4, record complete geometry/equ
 
 ESPectre supplies firmware, network transport, official collection, and official quality checks. This project adds local capture supervision, a simple offline reference/candidate workflow, labels, audit records, and reports. See [third-party notices](THIRD_PARTY_NOTICES.md). Raw NPZ files are unchanged, including device IDs and private-LAN endpoint metadata. Session logs are identified redacted copies. Full student IDs, course PDFs, private email, caches, credentials, and dependency environments are not included. Local original course submissions remain separate.
 
-This folder is added to an existing personal-site repository. Existing site files are outside this project's scope.
+This is the independent project repository. The old personal-site directory is an archival copy with a link here; unrelated personal-site files and history are not part of this repository.
