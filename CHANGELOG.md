@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-11-19 continuous live detection and course evidence
+
+- Add a single start/stop switch for continuous local detection and retain durations for existing API callers.
+- Publish the local empty-reference, quality diagnostics and limited transport recovery changes. File replay retains the frozen model.
+- Summarize the public pilots, private-study aggregates, live demonstration and course evidence gaps in [the progress report](reports/PROGRESS-2026-11-19.md).
+
 ## 2026-11-05 independent repository
 
 - Extract project-only history into SaMappp/WiFiPresence and update canonical source links.

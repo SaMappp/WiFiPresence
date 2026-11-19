@@ -2,6 +2,10 @@
 
 **Canonical repository: [SaMappp/WiFiPresence](https://github.com/SaMappp/WiFiPresence).** This independent repository was extracted from the personal-site project directory on 2026-11-05, preserving the three project commits and their authors. Use this repository for source, issues and future development. The existing project website remains a static introduction and preview. See the [migration record](reports/REPOSITORY-MIGRATION-2026-11-05.md).
 
+## 2026-11-19 continuous local detection and course progress
+
+The [local live workbench](live-mvp/README.md) has one switch to start continuous detection and stop it on demand. It uses a confirmed-empty reference for live occupancy. The [course progress report](reports/PROGRESS-2026-11-19.md) records the field demonstration, historical replay limits and remaining six-scene and team reproduction evidence.
+
 ## 2026-11-05: live MVP source and public entry
 
 [Project page](https://samappp.github.io/projects/WiFiPresence/) · [Run the live MVP locally](live-mvp/README.md) · [Current verification and limitations](reports/LIVE-MVP-2026-11-05.md)

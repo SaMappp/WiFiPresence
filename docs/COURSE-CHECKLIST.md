@@ -1,5 +1,7 @@
 # Course and instructor requirement check
 
+The [2026-11-19 progress report](../reports/PROGRESS-2026-11-19.md) records the live demonstration, remaining validation, and three-person reproduction requirements for this project. The course documents require final documentation, repository, demonstration materials, verification results and individual explanations. The final cutoff and format remain to be confirmed from the instructor.
+
 ## Current code publication: 2026-11-05
 
 The [live MVP](../live-mvp/README.md) adds explicitly started, bounded live CSI input, experimental presence output, cleanup/readback and recorded-file replay. The code, web UI and documentation are public; the owner chose not to publish new raw recordings, models, trial inventories or device metadata. Original public pilot files and their exclusions remain historical evidence. The local real-data candidate has substantial empty-room false positives. Current-session real hardware streaming and restoration were not verified because the previous address was unreachable. Public tests use artificial transport fixtures; recorded-data checks require the private local inputs. Instructor acceptance and team understanding remain unconfirmed.

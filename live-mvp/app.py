@@ -15,6 +15,7 @@ from urllib.parse import parse_qs, urlsplit
 from wifipresence.core import DataError, load_capture, predict
 from wifipresence.presence_model import admission, infer, validate_model
 from wifipresence.presence_live import LiveSession
+from wifipresence.reference_store import ReferenceStore
 
 ROOT = Path(__file__).resolve().parent
 DATA = Path(os.environ.get('WIFIPRESENCE_DATA_DIR', ROOT / 'data')).resolve()
@@ -28,7 +29,7 @@ except (OSError, ValueError, KeyError, TypeError, DataError) as exc:
     MODEL_ERROR = str(exc)
 MOTION = json.loads((DATA / 'motion-model.json').read_text(encoding='utf8')) if (DATA / 'motion-model.json').is_file() else None
 OFFICIAL_REPO = Path(os.environ.get('WIFIPRESENCE_ESPECTRE_REPO', Path.home() / 'Documents' / 'Codex' / 'WiFiPresence-Capture'))
-LIVE = LiveSession(model=PRESENCE, room='418')
+LIVE = LiveSession(model=PRESENCE, room='418', calibrated_live=True, reference_store=ReferenceStore())
 LIVE_REQUEST_LOCK = threading.Lock()
 BY_ID = {r['trial_id']: r for r in TRIALS}
 if len(BY_ID) != len(TRIALS):
@@ -145,12 +146,26 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(data,dict): raise DataError('JSON object required.')
             if self.path=='/api/live/start':
                 target=data.get('target'); room=data.get('room'); duration=data.get('duration')
-                if not isinstance(target,str) or not isinstance(room,str) or not room.strip() or len(room)>80 or type(duration) is not int:
-                    raise DataError('Enter device IPv4, room and whole-number duration.')
+                if not isinstance(target,str) or not isinstance(room,str) or not room.strip() or len(room)>80:
+                    raise DataError('Enter the device IPv4 address and actual room.')
+                if duration is not None and type(duration) is not int:
+                    raise DataError('Duration must be a whole number when supplied.')
                 with LIVE_REQUEST_LOCK:
                     if LIVE.thread and LIVE.thread.is_alive(): raise DataError('A live session is already active.')
                     LIVE.room=room.strip()
-                    LIVE.start(target.strip(),OFFICIAL_REPO,duration)
+                    empty_confirmed = data.get('empty_confirmed', False)
+                    reuse_reference = data.get('reuse_reference', False)
+                    if type(empty_confirmed) is not bool or type(reuse_reference) is not bool:
+                        raise DataError('Empty reference choices must be boolean.')
+                    if reuse_reference and not empty_confirmed:
+                        raise DataError('Reusing a reference requires a confirmed empty room.')
+                    if empty_confirmed:
+                        if PRESENCE is None or LIVE.room != PRESENCE['profile']['room']:
+                            raise DataError('Empty calibration requires the configured model and its actual room.')
+                        LIVE.start(target.strip(), OFFICIAL_REPO, duration, empty_confirmed=True,
+                                   reuse_reference=reuse_reference)
+                    else:
+                        LIVE.start(target.strip(), OFFICIAL_REPO, duration)
                 self.send_json(200, LIVE.snapshot());return
             if self.path=='/api/live/stop':
                 with LIVE_REQUEST_LOCK: LIVE.stop()

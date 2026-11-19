@@ -202,7 +202,7 @@ def classify_features(features, model):
     return label, p
 
 
-def infer(capture, model=None, *, admitted=False, room=None):
+def infer(capture, model=None, *, admitted=False, room=None, reference=None, reference_reason=None):
     if model:
         validate_model(model)
     config = Config(**model['config']) if model else Config()
@@ -220,10 +220,14 @@ def infer(capture, model=None, *, admitted=False, room=None):
     rows = feature_windows(capture, config)
     for row in rows:
         row['presence'], row['model_score'] = 'UNKNOWN', None
-        row['reason'] = reason or ('insufficient_window_quality' if row['features'] is None else 'experimental_model_output')
+        row['reason'] = reason or ('insufficient_window_quality' if row['features'] is None else
+                                   reference_reason or 'experimental_model_output')
         if reason is None and row['features'] is not None:
-            row['presence'], row['model_score'] = classify_features(row['features'], model)
-            if row['presence'] == 'UNKNOWN': row['reason'] = 'model_score_uncertain'
+            if reference is not None:
+                row['presence'], row['reason'], row['reference_distance'] = reference.predict(row['features'])
+            elif reference_reason is None:
+                row['presence'], row['model_score'] = classify_features(row['features'], model)
+                if row['presence'] == 'UNKNOWN': row['reason'] = 'model_score_uncertain'
         del row['features']
     return rows
 
